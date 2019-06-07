@@ -31,4 +31,21 @@ def currently_playing(username):
     }
     response = requests.get(url, headers=headers)
     json_data = json.loads(response.text)
-    return json_data["item"]["name"], json_data["item"]["artists"][0]["name"]
+    song = trim_song_title(json_data["item"]["name"])
+    return song, json_data["item"]["artists"][0]["name"]
+
+def trim_song_title(song):
+    split_song = song.split(" ")
+    index = 0
+    result = ""
+    for i in range(0, len(split_song)):
+        if '(' in split_song[i] or '-' in split_song[i]:
+            index = i
+            print(i)
+            break
+    for i in range(0, index):
+        if i == index - 1:
+            result += split_song[i]
+        else:
+            result += split_song[i] + " "
+    return result
