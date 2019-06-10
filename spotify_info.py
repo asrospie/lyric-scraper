@@ -38,14 +38,17 @@ def trim_song_title(song):
     split_song = song.split(" ")
     index = 0
     result = ""
+    trim_needed = False
     for i in range(0, len(split_song)):
         if '(' in split_song[i] or '-' in split_song[i]:
             index = i
-            print(i)
+            trim_needed = True
             break
-    for i in range(0, index):
-        if i == index - 1:
-            result += split_song[i]
-        else:
-            result += split_song[i] + " "
-    return result
+    if trim_needed:
+        for i in range(0, index):
+            if i == index - 1:
+                result += split_song[i]
+            else:
+                result += split_song[i] + " "
+        return result
+    return song
